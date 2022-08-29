@@ -1,0 +1,11 @@
+Package: FALL224753bate0046
+Type: Package
+Title: Fall22 ASM Main Directory
+Version: 0.1.0
+Author: Averi Bates
+Maintainer: The package maintainer <Averi.J.Bates-1@ou.edu>
+Description: A directory holding all the work done in
+    ASM during the FALL22 Semster
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
