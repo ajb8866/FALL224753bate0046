@@ -2,12 +2,17 @@
 title: "LAB 1"
 author: "Averi Bates"
 date: "2022-08-29"
-output: html_document
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+    
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 # Tasks
 
 ## Task 1
@@ -70,7 +75,7 @@ print(1)
 #20/20
 print(1)
 ```
-##Task 4 
+## Task 4 
 ```{r}
 sp=with(ddt,table(RIVER))
 sp
@@ -79,14 +84,20 @@ spriv=with(ddt,table(RIVER,SPECIES))
 spriv
 barplot(spriv, beside = TRUE, col = rainbow(4))
 ```
-## TASK 5
+
+
+## Task 5
+
 ```{r}
 sp=with(ddt,table(SPECIES))
 rv=with(ddt,table(RIVER))
 pie(sp,col=1:4)
 pie(rv,col=1:4)
 ```
-## TASK 6
+
+
+## Task 6
+
 ```{r}
 boxplot(DDT~SPECIES,col="Red",data=ddt)
 boxplot(WEIGHT~SPECIES,col="Blue",data=ddt)
@@ -98,7 +109,10 @@ boxplot(LENGTH~RIVER,col="Yellow",data=ddt)
 
 
 ```
-## TASK 7
+
+
+## Task 7
+
 ```{r}
 #embellish the plot with species using color using 'ifelse(test,yes,no)'
 fishcol=with(ddt,ifelse(SPECIES=="CCATFISH","Red",
@@ -113,7 +127,10 @@ coplot(LENGTH~WEIGHT|SPECIES,data=ddt, col = fishcol)
 coplot(DDT~WEIGHT|RIVER,data=ddt, col = rivcol)
 
 ```
-## TASK 8
+
+
+## Task 8
+
 ```{r}
 library(dplyr)
 library(ggplot2)

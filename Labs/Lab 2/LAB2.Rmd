@@ -1,0 +1,56 @@
+---
+title: "LAB1"
+author: "Averi Bates"
+date: "2022-08-31"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Tasks
+
+## Task 1
+```{r}
+getwd()
+```
+
+## Task 2
+```{r}
+mpg.df = read.csv("EPAGAS.csv")
+head(mpg.df)
+```
+
+
+## Task 3
+```{r}
+mpg = mpg.df$MPG
+z=(mpg-mean(mpg))/sd(mpg)
+head(z)
+print(paste0("mean = ", round(mean(z), digits = 4)), quote = F)
+print(paste0("variance = ",var(z)), quote = F)
+print(paste0("standard deviation = ", sd(z)), quote = F)
+```
+```{r}
+# Find the values of z that are possible outliers
+z[abs(z)>=2 & abs(z)<=3]
+#Find the values of mpg which are possible outliers
+mpg[abs(z)>2 & abs(z)<=3]
+# Find the z values greater than 3 in size which are outliers
+z[abs(z)>3]
+# Find the mpg values corresponding to these z values which are outliers
+mpg[abs(z)>3]
+```
+```{r}
+# Plot the outliers in red and the possible outliers in blue
+mycol = ifelse(abs(z)>3, "Red",
+        ifelse(abs(z)>=2 &abs(z)<=3,"Blue", "Black")) 
+library(lattice)
+dotplot(mpg,col=mycol)
+```
+
+
+## Task 4
