@@ -1,0 +1,287 @@
+---
+title: "Assignment 1"
+author: "Averi Bates"
+date: "2022-08-31"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Questions Completed 15/15
+## Question 1
+The courses final grade is composed of seven different categories the add together for the final grade.
+
+1) Assignments (4 Total) = 15% (3.75% each)
+
+2) Laboratories = 10%
+  - Possibly (not likely) 16 Lab/minilab reports - one lab per week usually
+  - Additional class room exercises
+  - Grades allotted through drop-boxes and Rubrics
+
+3) Projects (2 Total) = 10%  (ratio of 1:2 assessment - 1/3 Project 1, 2/3 Project 2)
+
+4) In class Quizzes = 10%
+
+5) Chapter Quizzes = 5%
+
+6) Midterm Exams (2 Total) = 20% (10% each)
+
+7) Final = 30%
+
+Grades are broken down in a typical A-F grading scale with no curving(rounding up to 4 decimal places).
+
+
+- A (90s) 
+- B (80s) 
+- C (60s and 70s) 
+- D (50s) 
+- F (<50) 
+
+## Question 2
+### a)
+
+
+```{r}
+ddt = read.csv("DDT.csv")
+m=with(ddt, as.numeric(factor(MILE))) # A
+length(unique(m)) #B
+coplot(LENGTH~WEIGHT|RIVER*SPECIES,data=ddt,col=m)
+
+```
+
+
+### b)
+
+The three lower conditional plots show that for CCATFISH,the relationship between LENGTH against WEIGHT for the rivers, FCM, LCM, and SCM through the use of a conditional scatter plot.  
+
+### c)
+
+Line A converts the levels of factors of MILE to a numeric vector.
+
+### d)
+
+Line B represents the number of unique MILES held with in the numeric vector m. The total equals 17. 
+
+### e)
+
+The top six plots are empty as there is no corresponding data related to those combinations. The species LMBASS and SMBUFFALO are not found within the rivers FCM, LCM, and SCM.
+
+### f)
+```{r}
+library(dplyr ,warn.conflicts = FALSE)
+ddt %>% filter(SPECIES == "CCATFISH" &  RIVER == "FCM" ) %>% summarize(mean = mean(DDT))
+
+```
+
+
+## Question 3
+### a) Length of maximum span (feet)
+
+Quantitative
+
+### b) Number of vehicle lanes
+
+Quantitative
+
+### c) Toll bridge (yes or no)
+
+Qualitative
+
+### d) Average daily traffic
+
+Quantitative
+
+### e) Condition of deck (good, fair, or poor)
+
+Qualitative
+
+### f) Bypass or detour length (miles)
+
+Quantitative
+
+### g) Route type (interstate, U.S., state, county, or city)
+
+Qualitative
+
+## Question 4
+
+### a)
+
+  - simple random sample 
+  - stratified random sampling
+  - cluster sampling
+  - systematic sampling
+  
+### b)
+  - Simple random sampling is when every item in a population has an equal chance of being selected for use. The selection entirely depends on luck/probability. 
+ - Stratified random sampling divides a population in homogeneous sub-population, called strata. Experimental units are more similar within strata then across strata. Random sampling is taken from each strata and then units are  combined to form a complete sample. 
+ - Cluster sampling is when a population is split into clusters from which some are selected. All the selected cluster's members will be include in the sample. 
+ - Systematic sampling involves systematically selecting every kth (where k is some positive number) experimental unit from a list of all experimental units. 
+
+## Question 5
+
+### a)
+```{r}
+mtbe=read.csv("MTBE.csv", header=TRUE) # You will need to change the address
+head(mtbe) # First six lines
+dim(mtbe) # rows and columns
+ind=sample(1:223,5,replace=FALSE) # random indices
+mtbe[ind,]
+```
+
+#### i)
+
+```{r}
+mtbeo=na.omit(mtbe)
+```
+
+
+#### ii)
+
+```{r}
+depth=mtbeo[mtbeo$Aquifier=="Bedrock",]$Depth
+sd(depth)
+```
+
+
+## Question 6
+
+### a)
+```{r}
+eq=read.csv("EARTHQUAKE.csv", header=TRUE) # You will need to change the address
+head(eq) # First six lines
+dim(eq) # rows and columns
+ind=sample(1:2929,5,replace=FALSE) # random indices
+eq[ind,]
+```
+
+#### i)
+```{r}
+plot(ts(eq$MAG))
+```
+
+
+
+#### ii)
+```{r}
+magn=eq$MAGNITUDE
+median(magn)
+```
+
+## Question 7
+
+### a)
+
+The data-collection method is a designed experiment. A method of data-collection where the researcher exerts full control over the characteristics of the experimental units sampled. These experiments typically involve an experimental group and a control group. 
+
+### b)
+
+The population is all fish in the Tennessee River and its tributaries, the sample derived from the population is a total of 144 fish. 
+
+### c)
+
+The qualitative variables equal the river the fish are found and their species (known as RIVER and SPECIES inside the DDT data).
+
+## Question 8
+```{r}
+pareto <- function(x, mn = "Pareto barplot", ...) {  # x is a vector
+  x.tab = table(x)
+  xx.tab = sort(x.tab, decreasing = TRUE, index.return = FALSE)
+  cumsum(as.vector(xx.tab)) -> cs
+  length(x.tab) -> lenx
+  bp <- barplot(xx.tab, ylim = c(0,max(cs)),las = 2)
+  lb <- seq(0,cs[lenx], l = 11)
+  axis(side = 4, at = lb, labels = paste(seq(0, 100, length = 11), "%", sep = ""), las = 1, line = -1, col = "Blue", col.axis = "Red")
+  for(i in 1:(lenx-1)){
+    segments(bp[i], cs[i], bp[i+1], cs[i+1], col = i, lwd = 2)
+  }
+  title(main = mn, ...)
+}
+```
+
+
+### a)
+
+The data is represented by a bar graph. 
+
+### b)
+
+The variable measured for each of the 106 robot design is the type of robotic limb. 15 had no limbs, 8 both legs and wheels, 63 had only legs, and 20 had only wheels. 
+
+### c)
+
+The most popular robot design based on the graph is one with only legs. 
+
+### d) 
+
+```{r}
+freq=c(15,8,63,20)
+RL=c("None","Both","LegsO","WheelsO")
+l=rep(RL,freq)
+
+tab <- table(l)
+tab
+tab <- round((table(l)/length(l)), digits = 4)
+tab
+```
+
+
+### e)
+
+```{r}
+pareto(l)
+```
+
+## Question 9
+
+### a)
+
+```{r}
+freq=c(32,8, 12)
+MS=c("Windows","Explorer","Office")
+m=rep(MS,freq)
+
+tab <- table(m)
+tab
+pie(tab, labels = MS, main = "Microsoft program security issues", col = c(10 , 5, 15))
+tab <- round((table(m)/length(m)), digits = 4)
+tab
+```
+
+The product Explorer had the lowest proportion (12%) of security issues in 2012.
+
+### b) 
+
+```{r}
+freq=c(6,8,22,3,11)
+bulletins=c("Denial", "Disclosure", "Execution", "Spoofing", "Elevation")
+bt=rep(bulletins,freq)
+pareto(bt)
+```
+
+Because approximately 44% expected repercussion of the vulnerability is due to the Remote Code Execution, Microsoft should focusing on increasing the security of that repercussion first. 
+
+
+## Question 10
+
+```{r}
+swe=read.csv("SWDEFECTS.CSV", header=TRUE) # You will need to change the address
+head(swe)
+tab <-table(swe$defect)
+dfect <- c("No Defect Present", "Defect Present")
+pie(tab, labels = dfect, main = "Pie", col = c(10 , 5))
+new_tab <- round(prop.table(tab), digits = 4)
+new_tab
+```
+
+Most of the software does not contain any defects. However a small percentage (around 10%) do meaning it is unlikely a customer will receive defective software but not impossible.
+
+
+## Question 11
+
+## Question 12
