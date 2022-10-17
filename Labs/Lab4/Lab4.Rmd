@@ -1,0 +1,284 @@
+---
+title: "Lab 4"
+author: "Averi Bates"
+date: '2022-09-16'
+output: 
+  html_document: 
+        toc: yes
+        toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Tasks
+
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+```{r}
+spruce = read.csv("SPRUCE.csv")
+tail(spruce)
+```
+## Task 3
+
+
+```{r}
+# Smooth Scatter Plot
+library(s20x)
+trendscatter(Height~BHDiameter,f=0.5,data=spruce)
+
+```
+
+
+```{r}
+# Linear Model 
+spruce.lm=with(spruce,lm(Height~BHDiameter)) 
+summary(spruce.lm)
+```
+
+
+
+```{r}
+# Residuals 
+height.res=residuals(spruce.lm)
+summary(height.res)
+
+```
+
+
+ 
+```{r}
+# Fitted Values
+fitted.res=fitted(spruce.lm)
+summary(fitted.res)
+```
+ 
+```{r}
+plot(x= fitted.res, y=height.res)
+```
+ 
+
+```{r}
+trendscatter( y= height.res, x= fitted.res)
+```
+
+
+ The shape in this plot comparing residuals vs. fitted values is a curvy downward slope of the data. The data climbs upward before going down. The other trendscatter plot was just a curved line trend in the data. 
+ 
+ The pvalue in this case is 2.089e-09. 
+
+```{r}
+windows()
+normcheck(spruce.lm,shapiro.wilk = TRUE)
+
+```
+
+The pvalue for this plot is 0.29.
+
+```{r}
+# Residual Plot 
+plot(spruce.lm, which = 1)
+```
+
+
+
+
+## Task 4
+
+
+
+```{r}
+# Quadratic Model
+library(s20x) 
+trendscatter( fitted.res,height.res)
+windows()
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce Height Prediction",data=spruce)
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce)
+summary(quad.lm)
+
+coef(quad.lm)
+names(quad.lm)
+quad.lm$coef[2]
+
+myplot=function(x){
+ 0.86089580 +1.46959217*x  -0.02745726*x^2
+}
+curve(myplot, lwd=2, col="purple",add=TRUE) 
+
+```
+
+```{r}
+quadfit = fitted(quad.lm)
+summary(quad.lm)
+```
+
+```{r}
+# Residuals vs. Quadratic Line
+plot(quad.lm, which=1)
+```
+
+
+
+```{r}
+# Normality Check
+windows()
+normcheck(quad.lm,shapiro.wilk = TRUE)
+```
+
+
+
+
+
+## Task 5
+
+
+```{r}
+summary(quad.lm)
+```
+
+B hat values 
+
+Bhat sub 0 = 0.86089580
+
+Bhat sub 1 = 1.4959217
+
+Bhat sub 2 = -0.027457
+
+ 
+
+```{r}
+# Interval Estimates
+ciReg(quad.lm)
+```
+Equation of Fitted Line
+
+y = 0.0860896 + 1.469x - 0.0274x^2
+
+```{r}
+predict(quad.lm, data.frame(BHDiameter=c(15,18,20)))
+```
+
+```{r}
+predict(quad.lm, data.frame(BHDiameter= c(3,6,8)))
+```
+
+
+The value for multiple R^2 in the quadratic equation model is 0.77 and the multiple R^2 for the spruce scatter plot is 0.6569. 
+
+The adjusted R^2 for the quadratic line is 0.76 and the adjusted for the spruce scatter plot is 0.6468. 
+
+The value for multiple R^2 for the quadratic line is a much better representation of the data because a higher percentage is explained by the plot. 
+
+
+
+
+```{r}
+# Variability in Height
+
+##Anova
+anova(spruce.lm)
+anova(quad.lm)
+anova(spruce.lm,quad.lm)
+```
+
+
+
+```{r}
+# TSS 
+TSS = with(spruce, sum((Height-mean(Height))^2))
+TSS
+```
+
+
+```{r}
+# RSS 
+height.fit=fitted(spruce.lm)
+RSS=with(spruce, sum((Height-height.fit)^2))
+RSS
+```
+
+```{r}
+#MSS
+MSS = with(spruce, sum((height.fit-mean(Height))^2))
+MSS
+```
+
+```{r}
+#MSS/TSS
+MSS/TSS
+```
+
+
+## Task 6
+
+```{r}
+# Cooks Plot 
+cooks20x(quad.lm)
+```
+
+Cooks Distance is used to determine the importance of a data point when conducting a regression analysis. Points with a higher distance may distort the accuracy of the plot, and are less important.   
+
+Cooks Distance means some data points matter more then others. 
+```{r}
+quad2=lm(Height~BHDiameter + I(BHDiameter^2) , data=spruce[-24,])
+summary(quad2)
+summary(quad.lm)
+```
+The new object above removed the outlier number 24. After doing this the mulitple R^2 increased to 0.81 which is a more accurate representtion of the data.
+
+## Task 7
+
+   \begin{eqnarray}
+
+\beta_0 +\beta_1 x_k &=& \beta_0\ - \beta_2x_k + (\beta_1+\beta_2)x_k\\ 
+y&=& \beta_0 -\beta_2x_k + (\beta_1 +\beta_2)x\\
+y&=& \beta_0 + \beta_1 x +\beta_1 + \beta_2(x-x_k)I(x>x_k)
+\end{eqnarray} 
+
+
+```{r}
+sp2.df=within(spruce, X<-(BHDiameter-18)*(BHDiameter>18)) 
+sp2.df
+
+lmp=lm(Height~BHDiameter + X,data=sp2.df)
+tmp=summary(lmp)
+names(tmp)
+myf = function(x,coef){
+  coef[1]+coef[2]*(x) + coef[3]*(x-18)*(x-18>0)
+}
+plot(spruce,main="Piecewise regression")
+myf(0, coef=tmp$coefficients[,"Estimate"])
+curve(myf(x,coef=tmp$coefficients[,"Estimate"] ),add=TRUE, lwd=2,col="Blue")
+abline(v=18)
+text(18,16,paste("R sq.=",round(tmp$r.squared,4) ))
+
+ 
+```
+
+
+
+## Task 8
+
+```{r}
+library(FALL224753bate0046)
+carb = read.csv("CARBON.csv")
+with(carb, scatterhist(PilotPlant, LabFurnace, xlab="PilotPlant"))
+
+```
+
+The function creates to basic graphs for categorical data, a pie chart and a bar plot. 
+
+
+
+
+
+

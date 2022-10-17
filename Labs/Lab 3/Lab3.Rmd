@@ -1,7 +1,7 @@
 ---
 title: "Lab 3: MATH 4753"
-author: "Your name"
-date: "January 28, 2019"
+author: "Averi Bates"
+date: "2022-09-9"
 output: 
   html_document:
     toc: yes
@@ -164,7 +164,18 @@ g=g+geom_point() + geom_line()+ geom_smooth(method="lm")
 g+ggtitle("Height Vs BHDiameter")
 ```
 
-##Me
+
+## Task 7
+This is how you place images in RMD documents
+
+<center>
+![](linear.png){ width=80% }
+![](point.png){ width=80% }
+![](jpoints.png){ width=80% }
+</center>
+
+
+## Me
 
 ```{r}
 obj = lm(Height~BHDiameter, data = spruce.df)
@@ -174,14 +185,3 @@ abline(obj)
 library(s20x)
 trendscatter(Height~BHDiameter,f=0.7, data=spruce.df)
 ```
-
-
-
-#Task 7
-This is how you place images in RMD documents
-
-<center>
-!["name of image"](gheat.png){ width=70% }
-</center>
-
-

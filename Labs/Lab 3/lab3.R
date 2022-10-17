@@ -1,16 +1,16 @@
 #This will be a different path if in the lab or at home
-dird="\\Users\\HyDRO-Lab\\Desktop\\MATH4753\\DATAxls\\"
+dird="C:\\\\Users\\averi\\Documents\\RStudio\\FALL224753bate0046\\Labs\\Data\\Excel"
 
-#my function to read data 
+#my function to read data
 myread=function(csv){
   fl=paste(dird,csv,sep="")
   read.table(fl,header=TRUE,sep=",")
 }
 #EASY WAY TO READ IN FILES
-fin.df=myread("FINTUBES.csv")
-spruce.df=myread("SPRUCE.csv")#MS pg478
+fin.df=read.csv("FINTUBES.csv")
+spruce.df=read.csv("SPRUCE.csv")#MS pg478
 
-# Or use 
+# Or use
 fin.df=read.table(file.choose(),header=TRUE,sep=",")
 
 #Top six lines
@@ -48,7 +48,7 @@ layout(matrix(1:4,nr=2,nc=2,byrow=TRUE))
 layout.show(4)
 
 #Plot the data
-with(fin.df, 
+with(fin.df,
 plot(HEAT~RATIO,bg="Blue",pch=21,ylim=c(0,1.1*max(HEAT)),xlim=c(0,1.1*max(RATIO)))
 )
 
@@ -62,7 +62,7 @@ ht.lm=with(fin.df, lm(HEAT~RATIO))
 abline(ht.lm)
 
 #make a new plot
-with(fin.df, 
+with(fin.df,
 plot(HEAT~RATIO,bg="Blue",pch=21,ylim=c(0,1.1*max(HEAT)),xlim=c(0,1.1*max(RATIO)))
 )
 
@@ -83,7 +83,7 @@ RSS=with(fin.df,sum((HEAT-yhat)^2))
 RSS
 
 #make a new plot
-with(fin.df, 
+with(fin.df,
 plot(HEAT~RATIO,bg="Blue",pch=21,ylim=c(0,1.1*max(HEAT)),xlim=c(0,1.1*max(RATIO)))
 )
 
@@ -98,7 +98,7 @@ MSS
 
 # Total  error
 #make a new plot
-with(fin.df, 
+with(fin.df,
 plot(HEAT~RATIO,bg="Blue",pch=21,ylim=c(0,1.1*max(HEAT)),xlim=c(0,1.1*max(RATIO)))
 )
 with(fin.df,abline(h=mean(HEAT)))
@@ -123,3 +123,4 @@ predict(ht.lm, data.frame(RATIO=c(2,2.3,2.5)))
 # Regression analysis of variance table
 #Can you find some of the ss in here?
 anova(ht.lm)
+

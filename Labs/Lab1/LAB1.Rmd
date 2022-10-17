@@ -43,6 +43,7 @@ tab
 
 #Number of Species
 tab <- table(ddt$SPECIES)
+addmargins(tab)
 tab
 
 #Subset = LMBASS WEIGHT > 800g
@@ -78,9 +79,12 @@ print(1)
 ## Task 4 
 ```{r}
 sp=with(ddt,table(RIVER))
+addmargins(sp)
 sp
 barplot(sp, col = rainbow(4))
+
 spriv=with(ddt,table(RIVER,SPECIES))
+addmargins(spriv)
 spriv
 barplot(spriv, beside = TRUE, col = rainbow(4))
 ```
