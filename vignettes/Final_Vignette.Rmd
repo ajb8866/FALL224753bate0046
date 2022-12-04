@@ -1,0 +1,87 @@
+---
+title: "Class_Final_Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class_Final_Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(FALL224753bate0046)
+```
+
+# Functions
+
+I have chosen 4 functions, and a data set from my package to upload for this assignment
+
+
+## myhyper
+
+Creates a simulation of a hypergeometric probability using the number of iterations, the total number of elements
+
+The number of success in the N elements and the number of elements drawn
+
+# Example:
+
+```{r}
+hyper=FALL224753bate0046::myhyper(100,20,10,8)
+hyper
+```
+
+## myci
+
+Creates the confidence interval of the mean given the samples and the confidence on the interval 
+
+## Example:
+
+```{r}
+y=c(3,4,5,6,7,10)
+cint=FALL224753bate0046::myci(y)
+cint
+```
+
+## myboot2
+
+Creates a confidence interval for the population mean for a given set of data by iterating subsets of a sample and calculating these samples means
+
+## Example:
+```{r}
+set.seed(50)
+sam=rnorm(10,mean=15,sd=12)
+mb=FALL224753bate0046::myboot2(iter=10000,x=sam,fun="mean",alpha=0.05,xlab="mean",col=rainbow(12))
+mb
+```
+
+
+## myncurve
+
+Creates a graph of a normal curve with mean mu and standard deviation sigma
+
+On this plot, it will also plot the lower tail area under the curve beginning at a, and print this value out to the console. 
+
+## Example:
+```{r}
+FALL224753bate0046::myncurve(mu = 8, sigma = 3, a = 10)
+
+```
+## fire
+The fire date used in previous labs, now able to load in using package
+
+## Example:
+```{r}
+f=FALL224753bate0046::fire
+f
+mean(f$DISTANCE)
+mean(f$DAMAGE)
+```
+
+
+
