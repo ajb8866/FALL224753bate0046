@@ -5,8 +5,10 @@ Version: 0.1.0
 Author: Averi Bates
 Maintainer: The package maintainer <Averi.J.Bates-1@ou.edu>
 Description: A directory holding all the work done in
-    ASM during the FALL22 Semster
+    ASM during the FALL22 Semster.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1
+Depends: 
+    R (>= 2.10)
